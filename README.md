@@ -1,13 +1,30 @@
 # 个人博客（veuxuncafe）
 
-简洁的中文个人博客，使用纯 HTML、CSS 和 JavaScript 构建，可直接部署到 GitHub Pages。
+基于 **Jekyll** 的中文个人博客，部署在 GitHub Pages（用户站点）：
 
-## 发布
+**https://veuxuncafe.github.io/**
 
-将本目录中的全部文件上传到 `veuxuncafe/veuxuncafe.github.io` 仓库，并在仓库的 `Settings -> Pages` 中选择 `main` 分支和根目录。部署完成后访问：
+## 日常操作
 
-https://veuxuncafe.github.io
+发文章、更新研究页、本地预览等所有操作，见 **[WRITING.md](WRITING.md)**（完整操作手册）。
 
-## 写新文章
+## 目录速览
 
-复制 `posts/hello-world.html`，修改标题、日期和正文，再在 `index.html` 的文章列表中添加一条链接即可。
+| 路径 | 作用 |
+|---|---|
+| `_posts/` | **文章**。Markdown，文件名 `YYYY-MM-DD-短名.md` |
+| `_layouts/` | 布局：`default.html`（全站 header/导航/footer）、`post.html`（文章页） |
+| `index.html` | 首页（hero + 文章列表 + 引言） |
+| `about.html` | 关于页 |
+| `styles.css` / `script.js` | 样式、深浅色切换与首页分类筛选 |
+| `_config.yml` | 站点配置。**改 `baseurl` 会让全站资源 404，别乱动** |
+| `research/` | 研究页：数据 `data/findings.json`、生成器 `generate_progress.py`、产物 `index.html` |
+| `.github/workflows/` | 云端每日自动更新工作流 |
+| `WRITING.md` | 完整操作手册 |
+
+## 部署
+
+仓库 `veuxuncafe/veuxuncafe.github.io` → Settings → Pages →
+Source 选 **Deploy from a branch** → **main** / **(root)**。
+
+推送后 1–2 分钟自动发布。

@@ -133,19 +133,22 @@ python -m http.server 8000
 
 ---
 
-## 五、已知遗留问题（建议有空清理）
+## 五、历史遗留问题（已清理）
 
-1. **根目录有 3 个 `2026-08-*.md` 文件不是文章**
-   `2026-08-12-slowly.md`、`2026-08-18-github-pages.md`、`2026-08-21-hello-world.md`
-   它们写着 `layout: post`，但**不在 `_posts/` 里**，所以不会被首页列出，而是各自发布成 `/2026-08-12-slowly.html` 这样的独立页面。
-   → 想当文章看，就把它们 `git mv` 进 `_posts/`。
+以下问题在 2026-09-15 已修复：
 
-2. **`github-pages.html` 是独立 HTML 文档**
-   自己写了 `<head>` 并引用 `../styles.css`，不走 Jekyll 布局，外观和站内其它页不一致。内容与 `2026-08-18-github-pages.md` 重复（都在讲 GitHub Pages 搭建）。
-   → 建议二选一删掉。
+1. **根目录 3 个 `.md` 不是文章** —— 它们写着 `layout: post` 却不在 `_posts/` 里，因此不会被首页列出，而是各自发布成 `/2026-08-12-slowly.html` 这样的独立页面。
+   → 已 `git mv` 进 `_posts/`，现在是正常文章：`/posts/slowly/`、`/posts/github-pages/`、`/posts/hello-world/`
 
-3. **`README.md` 的写文章说明已过时**
-   它说"复制 `posts/hello-world.html`，再在 `index.html` 的文章列表里加一条链接"——但 `posts/` 目录不存在，而且现在文章由 Jekyll 自动列出，不需要手动加链接。
+2. **`github-pages.html` 重复且样式不一致** —— 它是 `2026-08-18-github-pages.md` 的手写 HTML 版本（同标题、同日期、同正文），自己写了 `<head>` 和内联导航，不走 Jekyll 布局，且全仓库无人链接它。
+   → 已删除，保留 Markdown 版本作为正式文章。
+
+3. **`README.md` 的写作说明过时** —— 原文说"复制 `posts/hello-world.html`，再在 `index.html` 列表里加链接"，但 `posts/` 目录不存在，且文章现在由 Jekyll 自动列出。
+   → README 已重写，写作说明统一指向本手册。
+
+4. **首页被存根文件占用** —— `index.html` 与 `index.md` 抢同一根路径，Jekyll 选中了 `index.md`（内容是"欢迎来到我的博客"的占位稿，还引用了不存在的 `layout: home`），导致 hero、文章列表、引言区都没渲染。
+   → 已删除 `index.md`。
+
 
 ---
 
