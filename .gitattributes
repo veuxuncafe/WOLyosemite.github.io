@@ -1,0 +1,5 @@
+# Files that must stay LF: the GitHub Actions workflow is parsed and executed on
+# Linux, and the generator is invoked there directly. Everything else follows the
+# repository default (LF in the index, CRLF in a Windows working tree).
+.github/workflows/*.yml text eol=lf
+research/*.py           text eol=lf
