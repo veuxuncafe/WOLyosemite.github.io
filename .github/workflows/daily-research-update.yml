@@ -1,0 +1,58 @@
+name: Daily research progress update
+
+# Regenerates research/index.html from research/data/findings.json once a day.
+#
+# Notes
+#  * Runs on GitHub's runners, so it does not depend on any local machine being on.
+#  * The generator is standard-library only; there is nothing to pip install.
+#  * It commits ONLY when the generated page actually changed, and marks the commit
+#    with [skip ci] so it cannot trigger itself.
+#  * GitHub disables scheduled workflows after 60 days without repository activity.
+#    This job's own commits count as activity, but if it ever stops, use the manual
+#    "Run workflow" button (workflow_dispatch below) once to revive it.
+
+on:
+  schedule:
+    # 01:17 UTC = 09:17 Beijing time
+    - cron: '17 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-research-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate progress page
+        run: |
+          python research/generate_progress.py
+          echo "--- generated ---"
+          ls -l research.html
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- research.html; then
+            echo "No change in research.html (nothing to commit)."
+            exit 0
+          fi
+
+          git add research.html
+          git commit -m "chore(research): daily progress refresh $(date -u +%Y-%m-%d) [skip ci]"
+          git push

@@ -11,3 +11,6 @@ plugins:
   - jekyll-feed
 exclude:
   - README.md
+  - RESEARCH_SETUP.md
+  - research/generate_progress.py
+  - research/data

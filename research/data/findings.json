@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "project": "固定排序探针保护的迁移边界",
+    "english": "Why protection on a few fixed ranking probes does not transfer",
+    "data_freeze": "2026-09-16",
+    "data_freeze_note": "全部数值来自已归档并逐位验证的冻结结果；本页每日刷新，但研究数据不随刷新变化。",
+    "status": "P0-1 完整 / P0-2 完整（否定结果）/ P0-4 完成",
+    "integrity": {
+      "p01_margins_bit_exact": "248/248（|diff| = 0.0）",
+      "p01_event_measurements": "86/86",
+      "p02_states_generated": "132/132 × 3 态",
+      "p02_baseline_token_match": "36/36 逐 token",
+      "frozen_state_hash": "d07514a190fa412bbe073d9b51e20a066ea9f2a1bea3a0e72459c64508e31518",
+      "frozen_direction_hash": "7cbcbf4b40ddc27ce4b6bc047572d6552ff190e539c7a6c5ac1e9df508c0bf8b"
+    }
+  },
+
+  "question": "固定少量排序探针上的保护，为什么不能稳定迁移到结构匹配的新实例及真实生成行为？",
+
+  "thesis": "对少数固定探针施加的 margin 保护，是行为量在某个训练方便子空间上的投影；被保护的是投影，而失败恰好发生在被投影掉的正交补上。因此「保护迁移」这一框架本身不成立——探针从未约束正交补，也就不存在「本该迁移却没迁」的保证。",
+
+  "layers": [
+    { "name": "通道", "channel": "Channel", "projects_onto": "排序坐标", "complement": "集合完整性（漏选 / 多选）" },
+    { "name": "实例", "channel": "Instance", "projects_onto": "某个具体词面实现", "complement": "其他等价词面实现" },
+    { "name": "竞争", "channel": "Competition", "projects_onto": "一个固定对手", "complement": "真实 argmax 对手 / 整条分布" }
+  ],
+
+  "p01": {
+    "title": "通道特异性失明",
+    "population": "36 个冻结观测题 × 4 个端点臂（RUN151/152/154/155 step_0072）vs 共同 SFT 初始化",
+    "eligible_rows": 124,
+    "new_failures": 43,
+    "new_failures_ranking": 27,
+    "new_failures_omission": 16,
+    "rates": [
+      { "label": "基率（全部 eligible）", "en": "base rate", "n": 124, "rate": 68.5, "lo": 58.3, "hi": 83.3, "clusters": 8, "kind": "base" },
+      { "label": "排序类新增失败", "en": "ranking failure", "n": 27, "rate": 11.1, "lo": 0.0, "hi": 42.9, "clusters": 5, "kind": "depleted" },
+      { "label": "遗漏类新增失败", "en": "omission failure", "n": 16, "rate": 75.0, "lo": 50.0, "hi": 100.0, "clusters": 3, "kind": "blind" },
+      { "label": "保持正确", "en": "stayed correct", "n": 81, "rate": 86.4, "lo": 77.6, "hi": 98.9, "clusters": 7, "kind": "base" }
+    ],
+    "finding": "排序类区间上界 42.9% 低于基率区间下界 58.3% —— 代理确实看得见排序退化；遗漏类区间完全覆盖基率 —— 代理对遗漏不携带信息。约 20–25% 的新增失败落在代理原理上看不见的通道里。",
+    "mechanism": "fixed_negative 与 positive 的目标集合完全相同，因此 positive − fixed 的 margin 在数学上不可能反映完整性错误。这不是经验发现，而是对现有实践的批评：用排序探针监控完整性，原理上不成立。经验贡献在于幅度。",
+    "contingency": {
+      "cols": ["代理改善", "代理恶化"],
+      "rows": [
+        { "label": "新增失败", "values": [15, 28] },
+        { "label": "保持正确", "values": [70, 11] }
+      ]
+    },
+    "tautology": {
+      "title": "竞争诊断的循环性",
+      "note": "当「实际竞争者」被定义为模型自身更新后的输出时，反转条件恒真，该诊断不携带独立信息。",
+      "conditions": [
+        { "label": "(2) 实际竞争者反超", "k": 43, "n": 43, "verdict": "构造性蕴含" },
+        { "label": "(3) 解码 argmax 翻转", "k": 43, "n": 43, "verdict": "构造性蕴含" },
+        { "label": "(1) 固定负例代理改善", "k": 15, "n": 43, "verdict": "唯一携带信息者" }
+      ]
+    },
+    "counterexamples": [
+      "排序类失败中 24/27（89%）伴随代理恶化 —— 代理并非普遍无用。",
+      "遗漏类中有 4/16 代理恶化。",
+      "只报告「代理改善却失败」的 15 条就是单侧叙述。"
+    ]
+  },
+
+  "p02": {
+    "title": "实例层：代理信号不是行为信号",
+    "population": "132 条冻结词面输入 = 4 个源 + 4 类变体 × 32；同一初始状态、同一投影位移，α ∈ {0, 0.25, 1.0}",
+    "behaviour_correct": [
+      { "state": "pre（未更新）", "correct": 116, "n": 132 },
+      { "state": "α = 0.25", "correct": 115, "n": 132 },
+      { "state": "α = 1.0", "correct": 114, "n": 132 }
+    ],
+    "q1": {
+      "title": "行为侧词面敏感性：源正确而变体失败（每类 32 个）",
+      "cols": ["both", "id_only", "words_only", "length_matched"],
+      "rows": [
+        { "state": "pre（未更新）", "values": [5, 5, 1, 5] },
+        { "state": "α = 0.25", "values": [6, 5, 1, 5] },
+        { "state": "α = 1.0", "values": [6, 6, 1, 5] }
+      ],
+      "finding": "行为侧词面不稳定在 SFT 就存在（pre 态 5/5/1/5），更新几乎不动它。它不是保护迁移的产物，而是基模本身的词面敏感性。"
+    },
+    "q2": {
+      "title": "代理反向 vs 行为反向（源代理改善的 16 个变体）",
+      "alpha_025": { "proxy_reversed": [5, 3, 4, 5], "behaviour_newly_failed": [1, 0, 0, 0], "both": [0, 0, 0, 0] },
+      "alpha_10":  { "proxy_reversed": [5, 3, 4, 5], "behaviour_newly_failed": [1, 1, 0, 0], "both": [0, 0, 0, 0] }
+    },
+    "contingency": {
+      "cols": ["行为正常", "行为新增失败"],
+      "rows": [
+        { "label": "代理反向", "values": [74, 0] },
+        { "label": "代理未反向", "values": [53, 1] }
+      ],
+      "note": "α = 0.25，全部 128 个变体。代理的实例层敏感性不预测行为的实例层失败。"
+    },
+    "finding": "代理反向 17 个、行为反向 1 个、两者同时发生 0 个。代理在实例层的「不稳定性」是它自己的噪声，不是行为的影子。"
+  },
+
+  "related_work": [
+    { "work": "Razin et al., ICLR 2025", "title": "Unintentional Unalignment: Likelihood Displacement in DPO",
+      "point": "定义 likelihood displacement：损失下降而 y⁺ 与 y⁻ 的 log 概率同时下降。附录 G 分析了带 SFT 正则项的损失（点名 CPO），结论是缓解作用有限。",
+      "impact": "结论「代理改善伴随行为退化」已有先例，本文仅作为背景引用。" },
+    { "work": "HyPO, ICLR 2026", "title": "Mitigating Mismatch within Reference-based Preference Optimization",
+      "point": "相对 margin Δθ−Δref 可以为正而绝对 margin Δθ 仍为负；implicit reward ranking 与 likelihood ranking 一致率仅约 50%。",
+      "impact": "本文方法侧的四次 null 因此有理论化解释：被约束的量本身错配。" },
+    { "work": "Capability Traps in DPO, ICML 2026", "title": "—",
+      "point": "margin 与能力探针强负相关（Llama logic r = −0.91）；聚合分数掩盖探针簇对立；退化维度特异；建议 probe-resolved 而非 margin-based。",
+      "impact": "「均值掩盖逐项退化」的经验层已被覆盖，本文收窄到结构不可分性并显式划界。" }
+  ],
+
+  "limitations": [
+    "只有 4 个抽象结构家族；遗漏类只来自 3 个结构，区间很宽（上界到 100%）。率仅作方向性证据，不得用于宣称总体发生率。",
+    "主分析是 step0→step72 的端点关联，不是单步因果。",
+    "单一基模、单一程序生成任务；不外推到自然任务。",
+    "机制层未答：为什么是这些词面实现失败而其他不失败（token 身份、局部分词边界、词频、初始置信度未分离）。",
+    "复现性披露一：同一仓库内存在两套 padding 约定（变宽 vs 固定 381），相差 1e-5 ~ 1.4e-4。",
+    "复现性披露二：本次会话中实例出现非确定性内存失败（未修改脚本先成功后失败），重启后消失，原因未定。",
+    "以上两项均不影响任何已报告数字：每个数字都通过了哈希门。"
+  ]
+}
