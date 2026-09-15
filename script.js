@@ -1,12 +1,12 @@
 const themeButton = document.querySelector('.theme-toggle');
-const savedTheme = localStorage.getItem('wolyosemite-theme');
+const savedTheme = localStorage.getItem('veuxuncafe-theme');
 if (savedTheme === 'dark') document.body.classList.add('dark');
 if (themeButton) {
   const updateThemeLabel = () => { themeButton.textContent = document.body.classList.contains('dark') ? '浅色模式' : '深色模式'; };
   updateThemeLabel();
   themeButton.addEventListener('click', () => {
     document.body.classList.toggle('dark');
-    localStorage.setItem('wolyosemite-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    localStorage.setItem('veuxuncafe-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
     updateThemeLabel();
   });
 }

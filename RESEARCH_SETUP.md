@@ -25,7 +25,7 @@ Jekyll 只在 **`_layouts/`** 目录里找布局（`layouts_dir` 默认值）。
 
 1. **检查 GitHub Pages 是否已启用**
    Settings → Pages → Source 选 **Deploy from a branch**，Branch 选 **main** / **(root)**，Save。
-   （目前 `https://wolyosemite.github.io/` 及所有静态资源**全部 404**，说明 Pages 没有在服务。）
+   （账号已改名为 `veuxuncafe`、仓库名仍为 `WOLyosemite.github.io`，因此站点是**项目站点**，地址为 `https://veuxuncafe.github.io/WOLyosemite.github.io/`。）
 
 2. **放开 Actions 写权限**
    Settings → Actions → General → Workflow permissions → **Read and write permissions**。
@@ -34,7 +34,7 @@ Jekyll 只在 **`_layouts/`** 目录里找布局（`layouts_dir` 默认值）。
    Actions → **Daily research progress update** → **Run workflow**。
    日志应显示 `wrote research.html`，随后 `No change ... (nothing to commit)`。
 
-4. 访问 **`https://wolyosemite.github.io/research.html`**（主页导航已加"研究"入口）。
+4. 访问 **`https://veuxuncafe.github.io/WOLyosemite.github.io/research.html`**（主页导航已加"研究"入口）。
 
 ## 以后怎么更新数字
 

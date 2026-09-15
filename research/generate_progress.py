@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the research progress page for WOLyosemite.github.io.
+"""Generate the research progress page for veuxuncafe.
 
 Writes research.html at the repository root as a Jekyll page that reuses the
 site's own layout (header, navigation, footer, styles.css, theme toggle), so the
@@ -263,7 +263,7 @@ def build(data: dict) -> str:
 
     front = ("---\n"
              "layout: default\n"
-             f"title: {meta['project']} | WOLyosemite\n"
+             f"title: {meta['project']} | veuxuncafe\n"
              f"description: {data['question']}\n"
              "---\n")
     return front + body
