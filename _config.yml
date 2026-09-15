@@ -1,8 +1,8 @@
 title: WOLyosemite
 description: WOLyosemite 的个人博客，记录技术、阅读与生活。
 author: WOLyosemite
-url: https://wolyosemite.github.io
-baseurl: ""
+url: https://veuxuncafe.github.io
+baseurl: "/WOLyosemite.github.io"
 lang: zh-CN
 timezone: Asia/Shanghai
 markdown: kramdown
