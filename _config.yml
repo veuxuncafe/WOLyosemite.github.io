@@ -2,7 +2,7 @@ title: veuxuncafe
 description: veuxuncafe 的个人博客，记录技术、阅读与生活。
 author: veuxuncafe
 url: https://veuxuncafe.github.io
-baseurl: "/WOLyosemite.github.io"
+baseurl: ""
 lang: zh-CN
 timezone: Asia/Shanghai
 markdown: kramdown

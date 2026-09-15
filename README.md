@@ -4,9 +4,9 @@
 
 ## 发布
 
-将本目录中的全部文件上传到 `veuxuncafe/WOLyosemite.github.io` 仓库，并在仓库的 `Settings -> Pages` 中选择 `main` 分支和根目录。部署完成后访问：
+将本目录中的全部文件上传到 `veuxuncafe/veuxuncafe.github.io` 仓库，并在仓库的 `Settings -> Pages` 中选择 `main` 分支和根目录。部署完成后访问：
 
-https://veuxuncafe.github.io/WOLyosemite.github.io
+https://veuxuncafe.github.io
 
 ## 写新文章
 

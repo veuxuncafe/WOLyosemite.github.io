@@ -14,4 +14,4 @@ GitHub Pages 很适合用来搭建个人博客：仓库负责保存内容，Page
 
 ## 发布前检查
 
-确认仓库名称为 `WOLyosemite.github.io`，Pages 的来源设置为 `main` 分支根目录，然后等待 GitHub 完成部署即可。
+确认仓库名称为 `veuxuncafe.github.io`，Pages 的来源设置为 `main` 分支根目录，然后等待 GitHub 完成部署即可。
