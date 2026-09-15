@@ -1,4 +1,4 @@
-title: veuxuncafe
+﻿title: veuxuncafe
 description: veuxuncafe 的个人博客，记录技术、阅读与生活。
 author: veuxuncafe
 url: https://veuxuncafe.github.io
@@ -12,5 +12,6 @@ plugins:
 exclude:
   - README.md
   - RESEARCH_SETUP.md
+  - WRITING.md
   - research/generate_progress.py
   - research/data
