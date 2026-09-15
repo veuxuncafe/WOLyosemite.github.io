@@ -203,7 +203,7 @@ def build(data: dict) -> str:
   <p class="eyebrow">RESEARCH / PROXY PROTECTION</p>
   <h1>{esc(meta['project'])}</h1>
   <p class="r-meta">{esc(meta['english'])}<br>
-  本页刷新：{bj.strftime('%Y-%m-%d %H:%M')} (UTC+8)　·　{frozen_txt}　·　状态：{esc(meta['status'])}</p>
+  本页刷新：{bj.strftime('%Y-%m-%d')} (UTC+8)　·　{frozen_txt}　·　状态：{esc(meta['status'])}</p>
 
   <p class="q">{esc(data['question'])}</p>
   <div class="thesis"><p style="margin:0">{esc(data['thesis'])}</p></div>
