@@ -1,4 +1,4 @@
-﻿title: veuxuncafe
+title: veuxuncafe
 description: veuxuncafe 的个人博客，记录技术、阅读与生活。
 author: veuxuncafe
 url: https://veuxuncafe.github.io
@@ -6,6 +6,10 @@ baseurl: ""
 lang: zh-CN
 timezone: Asia/Shanghai
 markdown: kramdown
+kramdown:
+  # 单换行渲染为 <br>。中英对照长文里公式常写成相邻两行
+  # （如 PE(pos,2i) / PE(pos,2i+1)），不开这个会被合并成一行。
+  hard_wrap: true
 permalink: /posts/:title/
 plugins:
   - jekyll-feed

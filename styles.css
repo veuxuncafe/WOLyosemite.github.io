@@ -63,3 +63,15 @@ em { color: var(--accent); font-style: normal; }
 .post-body { padding-top: 44px; font-size: 1.05rem; }.post-body h2 { margin-top: 48px; font-size: 1.6rem; }.post-body code { background: var(--accent-soft); color: var(--accent); padding: 2px 6px; }
 body.dark { --bg: #1f201e; --surface: #292a27; --text: #eeeeea; --muted: #aaa9a1; --line: #41423c; --accent-soft: #3a2925; }
 @media (max-width: 700px) { .container { width: min(var(--max), calc(100% - 32px)); }.nav-wrap { min-height: 66px; }.nav { gap: 14px; font-size: .78rem; }.nav a:nth-child(2) { display: none; }.theme-toggle { padding-left: 14px; }.hero { grid-template-columns: 1fr; gap: 25px; padding: 72px 0 70px; min-height: auto; }.hero h1 { font-size: 3.1rem; }.hero-mark { min-height: 220px; }.mark-ring { width: 190px; height: 190px; }.mark-letter { font-size: 7rem; }.content-section { padding: 72px 0; }.section-heading { display: block; }.filters { margin-top: 20px; }.article-item { grid-template-columns: 1fr 25px; gap: 4px 20px; }.article-date { grid-column: 1 / -1; }.article-main h3 { font-size: 1.2rem; }.article-arrow { grid-column: 2; grid-row: 2 / span 2; }.quote { font-size: 1.45rem; }.page, .post { padding: 72px 0 100px; }.page h1 { margin-bottom: 54px; font-size: 3.6rem; }.about-grid { grid-template-columns: 1fr; gap: 50px; }.footer-wrap { min-height: 72px; } }
+
+/* --- 长文样式：表格 / 插图 / 引用块（中英对照等长文） --- */
+.post-body table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: .88rem; }
+.post-body thead th { background: var(--surface); border: 1px solid var(--line); padding: 8px 10px; text-align: left; font-weight: 600; }
+.post-body tbody td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+.post-body img { display: block; max-width: 100%; height: auto; margin: 36px auto; border: 1px solid var(--line); }
+.post-body blockquote { margin: 20px 0; padding: 0 0 0 16px; border-left: 2px solid var(--line); color: var(--muted); }
+.post-body blockquote p { margin: 0 0 10px; }
+.post-body blockquote p:last-child { margin-bottom: 0; }
+.post-body p { line-height: 1.85; }
+.post-body hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+@media (max-width: 700px) { .post-body table { display: block; overflow-x: auto; white-space: nowrap; }.post-body blockquote { padding-left: 12px; } }
