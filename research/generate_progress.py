@@ -10,7 +10,7 @@ hand-built inline SVG. That keeps the daily GitHub Actions run fast and immune
 to plotting-library / font problems.
 
 Usage:  python research/generate_progress.py
-Writes: <repo-root>/research.html
+Writes: <repo-root>/research/index.html
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 REPO_ROOT = HERE.parent
 DATA = HERE / "data" / "findings.json"
-OUT = REPO_ROOT / "research.html"
+OUT = REPO_ROOT / "research" / "index.html"
 
 # ------------------------------------------------------------------ palette
 BASE_COLOR = "#6b7280"

@@ -6,7 +6,7 @@
 |---|---|
 | `research/data/findings.json` | **唯一真值**。所有数字都在这里，改这个文件即可更新页面 |
 | `research/generate_progress.py` | 生成器（**零依赖**，仅 Python 标准库；图为手写内联 SVG） |
-| `research.html` | 生成产物（Jekyll 页面，`layout: default`）——**由机器人提交，不要手改** |
+| `research/index.html` | 生成产物（Jekyll 页面，`layout: default`）——**由机器人提交，不要手改** |
 | `.github/workflows/daily-research-update.yml` | 每天 09:17（北京时间）自动重生成并在有变化时提交 |
 | `_layouts/default.html`、`_layouts/post.html` | **修复**：原来放在根目录，Jekyll 解析不到 |
 | `_config.yml` | 把生成器与数据目录排除出发布产物 |
@@ -32,9 +32,9 @@ Jekyll 只在 **`_layouts/`** 目录里找布局（`layouts_dir` 默认值）。
 
 3. **手动跑一次验证**
    Actions → **Daily research progress update** → **Run workflow**。
-   日志应显示 `wrote research.html`，随后 `No change ... (nothing to commit)`。
+   日志应显示 `wrote research/index.html`，随后 `No change ... (nothing to commit)`。
 
-4. 访问 **`https://veuxuncafe.github.io/research.html`**（主页导航已加"研究"入口）。
+4. 访问 **`https://veuxuncafe.github.io/research/`**（主页导航已加"研究"入口）。
 
 ## 以后怎么更新数字
 
@@ -44,10 +44,10 @@ Jekyll 只在 **`_layouts/`** 目录里找布局（`layouts_dir` 默认值）。
 
 ```bash
 python research/generate_progress.py
-python -m http.server 8000    # 然后打开 http://localhost:8000/research.html
+python -m http.server 8000    # 然后打开 http://localhost:8000/research/
 ```
 
-（注意：直接双击 `research.html` 看不到站点的导航和样式，因为它依赖 Jekyll 渲染布局。）
+（注意：直接双击 `research/index.html` 看不到站点的导航和样式，因为它依赖 Jekyll 渲染布局。）
 
 ## 两个已知行为
 

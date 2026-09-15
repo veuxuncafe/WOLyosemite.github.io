@@ -40,7 +40,7 @@ jobs:
         run: |
           python research/generate_progress.py
           echo "--- generated ---"
-          ls -l research.html
+          ls -l research/index.html
 
       - name: Commit if changed
         run: |
@@ -48,11 +48,11 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet -- research.html; then
-            echo "No change in research.html (nothing to commit)."
+          if git diff --quiet -- research/index.html; then
+            echo "No change in research/index.html (nothing to commit)."
             exit 0
           fi
 
-          git add research.html
+          git add research/index.html
           git commit -m "chore(research): daily progress refresh $(date -u +%Y-%m-%d) [skip ci]"
           git push
